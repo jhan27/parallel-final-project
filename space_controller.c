@@ -9,6 +9,7 @@
 #include "space_controller.h"
 #include "build_config.h"
 
+
 SpaceController* spacecontroller_init(SimulationConfig config) {
     SpaceController *controller = (SpaceController*)malloc(sizeof(SpaceController));
     if (!controller) {
@@ -29,7 +30,7 @@ SpaceController* spacecontroller_init(SimulationConfig config) {
     return controller;
 }
 
-void spacecontroller_update(SpaceController *c, GS_FLOAT dt) {
+void spacecontroller_update(GLFWwindow* window, SpaceController *c, GS_FLOAT dt) {
     static GS_FLOAT last_update_time = 0.0;
     spacemodel_update(c->model, dt);
     last_update_time += dt;
@@ -42,7 +43,7 @@ void spacecontroller_update(SpaceController *c, GS_FLOAT dt) {
 #if PRINT_FPS
         printf("FPS: %.1f\n", 1.0 / last_update_time);
 #endif
-        spaceview_display(c->view);
+        spaceview_display(window, c->view);
         last_update_time = 0.0;
     }
 }

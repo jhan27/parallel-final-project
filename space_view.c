@@ -8,7 +8,6 @@
 
 #include "space_view.h"
 #include "drawing.h"
-#include <GL/glfw.h>
 #include "build_config.h"
 
 SpaceView * spaceview_init(RectangleD bounds) {
@@ -43,8 +42,8 @@ void spaceview_draw_objects(SpaceView *view, ObjectArray *objects) {
     }
 }
 
-void spaceview_display(SpaceView *view) {
-    screen_display(view->screen);
+void spaceview_display(GLFWwindow* window, SpaceView *view) {
+    screen_display(window, view->screen);
 }
 
 void spaceview_draw_quadtree(SpaceView *view, QuadTree *tree) {

@@ -7,7 +7,6 @@
 //
 
 #include <stdlib.h>
-#include <GL/glfw.h>
 #include "build_config.h"
 #include "screen.h"
 
@@ -33,11 +32,11 @@ void screen_fill(Screen *screen, RGBColor color) {
     }
 }
 
-void screen_display(Screen *screen) {
+void screen_display(GLFWwindow* window, Screen *screen) {
 //    glClear( GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 //    glLoadIdentity();
     glDrawPixels(screen->width, screen->height, GL_RGB, GL_FLOAT, screen->pixels);
-    glfwSwapBuffers();
+    glfwSwapBuffers(window);
 }
 
 void screen_dealloc(Screen *screen) {

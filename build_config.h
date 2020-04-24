@@ -32,7 +32,7 @@
 #define DRAW_DARKEN 1
 #define DARKEN_STEP 0.3
 
-#define DRAW_QUADS   0
+#define DRAW_QUADS   1
 #define PRINT_FPS    0
 
 #define MAX_SPEED 10.00

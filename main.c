@@ -6,9 +6,11 @@
 //  Copyright (c) 2013 Krzysztof Gabis. All rights reserved.
 //
 
+#define GL_SILENCE_DEPRECATION
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <GL/glfw.h>
+#include <GLFW/glfw3.h>
 #include <time.h>
 #include "screen.h"
 #include "drawing.h"
@@ -20,8 +22,11 @@
 #define SUCCESS 0
 #define FAILURE 1
 
+GLFWwindow* window;
+
 static int gl_init(int width, int height, const char *title);
 static void gl_close(void);
+static void error_callback(int error, const char* description);
 bool main_loop(SpaceController *controller);
 void print_usage(const char *program_name);
 SimulationConfig get_config(int argc, const char *argv[]);
@@ -32,6 +37,7 @@ int main(int argc, const char * argv[]) {
     if (gl_init(WINDOW_W, WINDOW_H, WINDOW_TITLE) != SUCCESS) {
         return FAILURE;
     }
+
     SimulationConfig config = get_config(argc, argv);
     SpaceController *controller = spacecontroller_init(config);
     if (!controller) {
@@ -40,6 +46,7 @@ int main(int argc, const char * argv[]) {
     while (loop) {
         loop = main_loop(controller);
     }
+
     spacecontroller_dealloc(controller);
     gl_close();
     return SUCCESS;
@@ -54,10 +61,11 @@ bool main_loop(SpaceController *controller) {
         current_time = glfwGetTime();
         dt = current_time - old_time;
         
-        if(glfwGetKey(GLFW_KEY_ESC) || !glfwGetWindowParam(GLFW_OPENED)) {
+        if(glfwGetKey(window, GLFW_KEY_ESCAPE)) {
             return false;
         }
-        spacecontroller_update(controller, dt);
+        spacecontroller_update(window, controller, dt);
+        glfwPollEvents();
         old_time = current_time;
     }
     return true;
@@ -69,11 +77,12 @@ static int gl_init(int width, int height, const char *title) {
     if (status != GL_TRUE) {
         return FAILURE;
     }
-    status = glfwOpenWindow(width, height, 5, 6, 5, 0, 0, 0, GLFW_WINDOW);
-    if (status != GL_TRUE) {
+    glfwSetErrorCallback(error_callback);
+    window = glfwCreateWindow(width, height, title, NULL, NULL);
+    if (!window) {
         return FAILURE;
     }
-    glfwSetWindowTitle(title);
+    glfwMakeContextCurrent(window);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     float aspect_ratio = ((float)height) / width;
@@ -89,6 +98,11 @@ static void gl_close(void) {
 void print_usage(const char *program_name) {
     printf("Usage:%s number_of_galaxies objects_per_galaxy galaxy_size\n", program_name);
     printf("Using default config.\n");
+}
+
+static void error_callback(int error, const char* description)
+{
+    fprintf(stderr, "Error: %s\n", description);
 }
 
 SimulationConfig get_config(int argc, const char *argv[]) {

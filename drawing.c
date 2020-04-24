@@ -7,7 +7,7 @@
 //
 
 #include <stdio.h>
-#include <GL/glfw.h>
+#include <GLFW/glfw3.h>
 #include "drawing.h"
 
 void draw_darken_pixel_bw(Screen *screen, int x, int y, float step) {

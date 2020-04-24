@@ -10,6 +10,7 @@
 #define GravitySim_space_view_h
 
 #include <stdlib.h>
+#include <GLFW/glfw3.h>
 
 #include "object.h"
 #include "screen.h"
@@ -25,5 +26,5 @@ void spaceview_clear(SpaceView *view);
 void spaceview_draw_objects(SpaceView *view, ObjectArray *objects);
 void spaceview_draw_quadtree(SpaceView *view, QuadTree *tree);
 void spaceview_dealloc(SpaceView *view);
-void spaceview_display(SpaceView *view);
+void spaceview_display(GLFWwindow* window, SpaceView *view);
 #endif

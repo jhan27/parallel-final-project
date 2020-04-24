@@ -9,6 +9,7 @@
 #ifndef GravitySim_space_controller_h
 #define GravitySim_space_controller_h
 
+#include <GLFW/glfw3.h>
 #include "space_view.h"
 #include "space_model.h"
 
@@ -26,7 +27,7 @@ typedef struct {
 } SpaceController;
 
 SpaceController* spacecontroller_init(SimulationConfig config);
-void spacecontroller_update(SpaceController *controller, GS_FLOAT dt);
+void spacecontroller_update(GLFWwindow* window, SpaceController *controller, GS_FLOAT dt);
 void spacecontroller_dealloc(SpaceController *controller);
 
 #endif
