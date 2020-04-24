@@ -82,6 +82,7 @@ void spacemodel_update(SpaceModel *m, GS_FLOAT dt) {
 #ifdef CONST_TIME
     dt = CONST_TIME;
 #endif
+    
     quadtree_apply_to_objects(m->tree, m->objects, dt);
     for (i = 0; i < m->objects->len; i++) {
         object_update_position(&m->objects->objects[i], dt);

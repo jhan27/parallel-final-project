@@ -19,11 +19,13 @@ typedef struct {
     size_t objects_n;
     size_t galaxies_n;
     GS_FLOAT galaxy_size;
+    int num_iter;
 } SimulationConfig;
 
 typedef struct {
     SpaceView *view;
     SpaceModel *model;
+    int num_iter;
 } SpaceController;
 
 SpaceController* spacecontroller_init(SimulationConfig config);

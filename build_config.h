@@ -39,4 +39,6 @@
 #define MAX_MASS 10.0
 #define SD_TRESHOLD 1.0
 
+#define NUM_ITER 10000
+
 #endif

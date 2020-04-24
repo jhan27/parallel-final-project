@@ -21,12 +21,15 @@ SpaceController* spacecontroller_init(SimulationConfig config) {
         free(controller);
         return NULL;
     }
+    
     controller->view = spaceview_init(config.view_bounds);
     if (!controller->view) {
         free(controller->model);
         free(controller);
         return NULL;
     }
+
+    controller->num_iter = config.num_iter;
     return controller;
 }
 

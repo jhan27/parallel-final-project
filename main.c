@@ -27,7 +27,7 @@ GLFWwindow* window;
 static int gl_init(int width, int height, const char *title);
 static void gl_close(void);
 static void error_callback(int error, const char* description);
-bool main_loop(SpaceController *controller);
+bool main_loop(SpaceController *controller, GS_FLOAT start);
 void print_usage(const char *program_name);
 SimulationConfig get_config(int argc, const char *argv[]);
 
@@ -43,8 +43,10 @@ int main(int argc, const char * argv[]) {
     if (!controller) {
         return FAILURE;
     }
+
+    GS_FLOAT start = glfwGetTime();
     while (loop) {
-        loop = main_loop(controller);
+        loop = main_loop(controller, start);
     }
 
     spacecontroller_dealloc(controller);
@@ -52,21 +54,28 @@ int main(int argc, const char * argv[]) {
     return SUCCESS;
 }
 
-bool main_loop(SpaceController *controller) {
+bool main_loop(SpaceController *controller, GS_FLOAT start) {
     GS_FLOAT old_time = glfwGetTime();
     GS_FLOAT current_time;
     GS_FLOAT dt;
 
+    int cnt = 0;
     while (1) {
         current_time = glfwGetTime();
         dt = current_time - old_time;
         
-        if(glfwGetKey(window, GLFW_KEY_ESCAPE)) {
+        if(glfwGetKey(window, GLFW_KEY_ESCAPE) || cnt == controller->num_iter) {
+            GS_FLOAT end = glfwGetTime();
+            GS_FLOAT duration = end - start;
+            printf("main_loop execution time: %.4f\n", duration);
+            printf("number of loops: %d\n", cnt);
+            printf("avgearge time per loop: %.4f\n", duration / cnt);
             return false;
         }
         spacecontroller_update(window, controller, dt);
         glfwPollEvents();
         old_time = current_time;
+        cnt++;
     }
     return true;
 }
@@ -112,6 +121,7 @@ SimulationConfig get_config(int argc, const char *argv[]) {
     config.model_bounds = MODEL_BOUNDS;
     config.view_bounds = WINDOW_BOUNDS;
     config.objects_n = OBJECT_NUM;
+    config.num_iter = NUM_ITER;
     if (argc != 4) {
         print_usage(argv[0]);
         return config;
