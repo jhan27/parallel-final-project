@@ -67,9 +67,9 @@ bool main_loop(SpaceController *controller, GS_FLOAT start) {
         if(glfwGetKey(window, GLFW_KEY_ESCAPE) || cnt == controller->num_iter) {
             GS_FLOAT end = glfwGetTime();
             GS_FLOAT duration = end - start;
-            printf("main_loop execution time: %.4f\n", duration);
+            printf("main_loop execution time: %.4f ms\n", duration * 1000);
             printf("number of loops: %d\n", cnt);
-            printf("avgearge time per loop: %.4f\n", duration / cnt);
+            printf("avgearge time per loop: %.4f ms\n", duration / cnt * 1000);
             return false;
         }
         spacecontroller_update(window, controller, dt);
