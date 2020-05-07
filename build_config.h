@@ -37,8 +37,8 @@
 
 #define MAX_SPEED 10.00
 #define MAX_MASS 10.0
-#define SD_TRESHOLD 1.0
+#define SD_TRESHOLD 0.5
 
-#define NUM_ITER 10000
+#define NUM_ITER 100
 
 #endif

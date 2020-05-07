@@ -8,8 +8,8 @@
 
 #include "space_model.h"
 #include <stdlib.h>
-
-void spacemodel_remove_objects_outside_bounds(SpaceModel *m);
+#include <stdio.h>
+#include <time.h>
 
 SpaceModel* spacemodel_init_empty(RectangleD bounds, size_t capacity) {
     SpaceModel *m = (SpaceModel*)malloc(sizeof(SpaceModel));
@@ -40,6 +40,8 @@ SpaceModel* spacemodel_init_galaxies(RectangleD bounds, RectangleD galaxies_boun
     }
     Point2D galaxy_pos;
     size_t i;
+
+    srand(0);
     for (i = 0; i < n_galaxies; i++) {
         galaxy_pos.x =  ((GS_FLOAT)rand()/(GS_FLOAT)RAND_MAX) * (galaxies_bounds.size.x - galaxy_size);
         galaxy_pos.y =  ((GS_FLOAT)rand()/(GS_FLOAT)RAND_MAX) * (galaxies_bounds.size.y - galaxy_size);
@@ -82,7 +84,6 @@ void spacemodel_update(SpaceModel *m, GS_FLOAT dt) {
 #ifdef CONST_TIME
     dt = CONST_TIME;
 #endif
-    
     quadtree_apply_to_objects(m->tree, m->objects, dt);
     for (i = 0; i < m->objects->len; i++) {
         object_update_position(&m->objects->objects[i], dt);

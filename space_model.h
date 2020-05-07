@@ -26,5 +26,6 @@ SpaceModel* spacemodel_init_galaxies(RectangleD bounds, RectangleD galaxies_boun
 void spacemodel_add_galaxy(SpaceModel *m, Point2D position, GS_FLOAT size, size_t n);
 void spacemodel_update(SpaceModel *model, GS_FLOAT dt);
 void spacemodel_dealloc(SpaceModel *model);
+void spacemodel_remove_objects_outside_bounds(SpaceModel *m);
 
 #endif

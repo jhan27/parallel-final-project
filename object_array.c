@@ -29,8 +29,9 @@ ObjectArray* objectarray_init_empty(size_t capacity) {
 void objectarray_add(ObjectArray *array, Object object) {
     if (array->len >= array->capacity) {
         size_t new_capacity = array->capacity * 2;
-        Object* realloc_ptr = realloc(array->objects, new_capacity * sizeof(Object));
-        if (realloc_ptr == NULL) {
+        Object *realloc_ptr = (Object *)realloc(array->objects, new_capacity * sizeof(Object));
+        if (realloc_ptr == NULL)
+        {
             fprintf(stderr, "Realloc error in ObjectArray.\n");
             return; //no erro handling here
         }
