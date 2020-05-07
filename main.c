@@ -71,8 +71,7 @@ bool main_loop(SpaceController *controller, SimulationConfig config, GS_FLOAT st
               printf("\n------------- cuda ------------- \n");
             }
 
-            printf("total execution time: %.4f ms\n", duration);
-            printf("avgearge time per loop: %.4f ms\n\n", duration / cnt);
+            printf("Average runtime per each simulation iteration: %.4f ms\n\n", duration / cnt);
 
             return false;
         }
