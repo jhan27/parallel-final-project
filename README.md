@@ -1,11 +1,8 @@
 ## About
-We used CUDA with C to implement a parallel version of the the Barnes-Hut algorithm for the N-body galaxy simulator. We evaluated the program performance on the NVIDIA GPUs on the GHC machines, and our implementation achieves a 18.13x speedup with 32,000 particles in the galaxy.
+We used CUDA with C to implement a parallel version of the the [Barnes-Hut](http://en.wikipedia.org/wiki/Barnes%E2%80%93Hut_simulation)  algorithm for the N-body galaxy simulator. We evaluated the program performance on the NVIDIA GPUs on the GHC machines, and our implementation achieves a 18.13x speedup with 32,000 particles in the galaxy.
 
-[Barnes-Hut](http://en.wikipedia.org/wiki/Barnes%E2%80%93Hut_simulation) 
 
-We adopted a sequential version of the simulator that uses the Barnes-Hut algorithm as starter code and then implemented a parallel version on top on it. 
-
-Sequential Version [gavitysim](https://github.com/kgabis/gravitysim)
+We adopted a [sequential version](https://github.com/kgabis/gravitysim) of the simulator that uses the Barnes-Hut algorithm as starter code and then implemented a parallel version on top on it. 
 
 The only dependency for the sequential version is the [GLFW3 library] and we have tried to run it locally. However since we didn't install GLFW3 on the GHC machines, visualization is turned off for the final parallel version. 
 
