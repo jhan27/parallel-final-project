@@ -1,25 +1,33 @@
 ## About
-GravitySim is a gravity simulator (duh) written in C, using the [Barnes-Hut](http://en.wikipedia.org/wiki/Barnes%E2%80%93Hut_simulation) algorithm to approximate gravity interactions between objects. The only dependency is the [GLFW2 library](https://github.com/glfw/glfw-legacy), you shoud be able to install it using either apt-get on linux or homebrew on OSX. 
+We used CUDA with C to implement a parallel version of the the Barnes-Hut algorithm for the N-body galaxy simulator. We evaluated the program performance on the NVIDIA GPUs on the GHC machines, and our implementation achieves a 18.13x speedup with 32,000 particles in the galaxy.
 
-##### Installing GLFW2 on OSX
+[Barnes-Hut](http://en.wikipedia.org/wiki/Barnes%E2%80%93Hut_simulation) 
+
+We adopted a sequential version of the simulator that uses the Barnes-Hut algorithm as starter code and then implemented a parallel version on top on it. 
+
+Sequential Version [gavitysim](https://github.com/kgabis/gravitysim)
+
+The only dependency for the sequential version is the [GLFW3 library] and we have tried to run it locally. However since we didn't install GLFW3 on the GHC machines, visualization is turned off for the final parallel version. 
+
+##### Installing GLFW3 on OSX
 ```
-brew tap homebrew/versions
-brew install --build-bottle --static glfw2
+brew install --build-bottle --static glfw3
 ```
 
 ## Usage
-Compile with ```make mac``` for OSX or ```make linux``` for linux (only tested on ubuntu). Now you should be able to run it using ```./gravitysim```.  
-To customize simulation you can call it with different arguments.
+Compile with ```make ``` and run it using ```./gravitysim```.  
+The program takes in three arguments:
 ```
 ./gravitysim number_of_galaxies objects_per_galaxy galaxy_size
 ```  
 For instance:  
-```./gravitysim 10 1000 100``` creates 10 galaxies with 1000 objects per galaxy and diameter 100 pixels.  
-```./gravitysim 10000 1 1``` creates 10000 galaxies with one object per galaxy and diameter 1 pixel.  
-You could also customize a lot of options using build_config.h file (such as G constant, sd treshold, max speed or max mass), but it requires rebuilding whole project.
-Have fun.
+```./gravitysim 20 1000 100``` runs a simulation of 20 galaxies with 1000 objects per galaxy and 100-pixel galaxy size.
 
-## Screenshots
+The default with no argument is set to run ```./gravitysim 4 1000 100```
+
+In the parallel version, the program will display the average simulation iteration runtime for both the sequential and the CUDA version. 
+
+## Screenshots (for the sequential version)
 ![frist](screens/1.png)  
 ![second](screens/2.png)  
 ![third](screens/3.png)  
